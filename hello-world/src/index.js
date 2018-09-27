@@ -36,11 +36,17 @@ class Clock extends React.Component {
     }
 }
 
-function tick() {
-    ReactDOM.render(
-        <Clock />,
-        document.getElementById('root')
+function App() {
+    return (
+      <div>
+        <Clock />
+        <Clock />
+        <Clock />
+      </div>
     );
-}
-
-setInterval(tick, 1000);
+  }
+  
+  ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+  );
