@@ -2,80 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-//components defined as classes have some additional features (state in this case)
-class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date() };
-    }
-
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-
-    componentWillMount() {
-        clearInterval(this.timerID);
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <h1>Hello, world!</h1>
-                <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-            </div>
-        );
-    }
-}
-
-class Toggle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { isToggleOn: true };
-
-        // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick() {
-        this.setState(state => ({
-            isToggleOn: !state.isToggleOn
-        }));
-    }
-
-    render() {
-        return (
-            <button onClick={this.handleClick}>
-                {this.state.isToggleOn ? 'ON' : 'OFF'}
-            </button>
-        );
-    }
-}
-
-class LoggingButton extends React.Component {
-    // This syntax ensures `this` is bound within handleClick.
-    // Warning: this is *experimental* syntax.
-    handleClick = () => {
-        console.log('this is:', this);
-    }
-
-    render() {
-        return (
-            <button onClick={this.handleClick}>
-                Click me
-        </button>
-        );
-    }
-}
-
 function UserGreeting(props) {
     return <h1>Welcome back!</h1>;
 }
@@ -92,17 +18,58 @@ function Greeting(props) {
     return <GuestGreeting />;
 }
 
-function App() {
+function LoginButton(props) {
     return (
-        <div>
-            <Toggle />
-            <Clock />
-            <LoggingButton />
-        </div>
+        <button onClick={props.onClick}>
+            Login
+      </button>
     );
 }
 
+function LogoutButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Logout
+      </button>
+    );
+}
+
+class LoginControl extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.state = { isLoggedIn: false };
+    }
+
+    handleLoginClick() {
+        this.setState({ isLoggedIn: true });
+    }
+
+    handleLogoutClick() {
+        this.setState({ isLoggedIn: false });
+    }
+
+    render() {
+        const isLoggedIn = this.state.isLoggedIn;
+        let button;
+
+        if (isLoggedIn) {
+            button = <LogoutButton onClick={this.handleLogoutClick} />;
+        } else {
+            button = <LoginButton onClick={this.handleLoginClick} />
+        }
+
+        return (
+            <div>
+                <Greeting isLoggedIn={isLoggedIn} />
+                {button}
+            </div>
+        );
+    }
+}
+
 ReactDOM.render(
-    <Greeting isLoggedIn={true} />,
+    <LoginControl />,
     document.getElementById('root')
 );
