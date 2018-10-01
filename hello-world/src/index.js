@@ -34,6 +34,20 @@ function LogoutButton(props) {
     );
 }
 
+function Mailbox(props) {
+    const unreadMessages = props.unreadMessages;
+    return (
+        <div>
+            <h1>Hello!</h1>
+            {unreadMessages.length > 0 &&
+                <h2>
+                    You have {unreadMessages.length} unread messages.
+          </h2>
+            }
+        </div>
+    );
+}
+
 class LoginControl extends React.Component {
     constructor(props) {
         super(props);
@@ -52,6 +66,7 @@ class LoginControl extends React.Component {
 
     render() {
         const isLoggedIn = this.state.isLoggedIn;
+        const messages = ['React', 'Re: React', 'Re:Re: React'];
         let button;
 
         if (isLoggedIn) {
@@ -60,9 +75,11 @@ class LoginControl extends React.Component {
             button = <LoginButton onClick={this.handleLoginClick} />
         }
 
+
         return (
             <div>
-                <Greeting isLoggedIn={isLoggedIn} />
+                <Greeting isLoggedIn={isLoggedIn} />,
+                <Mailbox unreadMessages={messages} />,
                 {button}
             </div>
         );
