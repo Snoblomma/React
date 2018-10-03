@@ -2,54 +2,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function WarningBanner(props) {
-    if (!props.warn) {
-        return null;
-    }
+function Blog(props) {
+    const sidebar = (
+        <ul>
+            {props.posts.map((post) =>
+                <li key={post.id}>
+                    {post.title}
+                </li>
+            )}
+        </ul>
+    );
+    const content = props.posts.map((post) =>
+        <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+        </div>
+    );
     return (
-        <div className="warning">
-            Warning!
+        <div>
+            {sidebar}
+            <hr />
+            {content}
         </div>
     );
 }
 
-class Page extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { showWarning: true };
-        this.handleToggleClick = this.handleToggleClick.bind(this);
-    }
-
-    handleToggleClick() {
-        this.setState(state => ({
-            showWarning: !state.showWarning
-        }));
-    }
-
-    render() {
-        return (
-            <div>
-                <WarningBanner warn={this.state.showWarning} />
-                <button onClick={this.handleToggleClick}>
-                    {this.state.showWarning ? 'Hide' : 'Show'}
-                </button>
-            </div>
-        );
-    }
-}
-
-function NumberList(props) {
-    const numbers = props.numbers;
-    const listItems = numbers.map((number) =>
-        <li>{number}</li>
-    );
-    return (
-        <ul>{listItems}</ul>
-    );
-}
-
-const numbers = [1, 2, 3, 4, 5];
+const posts = [
+    { id: 1, title: 'Hello World', content: 'Welcome to learning React!' },
+    { id: 2, title: 'Installation', content: 'You can install React from npm.' }
+];
 ReactDOM.render(
-    <NumberList numbers={numbers} />,
+    <Blog posts={posts} />,
     document.getElementById('root')
 );
