@@ -2,6 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+function Post(props) {
+    return (
+        <div key={props.id}>
+            <h3>{props.title}</h3>
+            <p>{props.content}</p>
+        </div>
+    );
+}
+
 function Blog(props) {
     const sidebar = (
         <ul>
@@ -12,11 +21,13 @@ function Blog(props) {
             )}
         </ul>
     );
-    const content = props.posts.map((post) =>
-        <div key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-        </div>
+
+    const content = posts.map((post) =>
+        <Post
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            content={post.content} />
     );
     return (
         <div>
