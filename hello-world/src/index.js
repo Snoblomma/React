@@ -38,7 +38,7 @@ class EssayForm extends React.Component {
 class FlavorForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: 'coconut' };
+        this.state = { value: ['coconut', 'mango'] };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -58,7 +58,7 @@ class FlavorForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Pick your favorite flavor:
-            <select value={this.state.value} onChange={this.handleChange}>
+                    <select multiple={true} value={this.state.value} onChange={this.handleChange}>
                         <option value="grapefruit">Grapefruit</option>
                         <option value="lime">Lime</option>
                         <option value="coconut">Coconut</option>
